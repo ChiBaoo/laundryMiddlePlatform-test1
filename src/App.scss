@@ -1,0 +1,183 @@
+.Sign-Up{
+    .header{
+      width: 100%;
+      height: 300px;
+    }
+    .header{
+      height: 100px;
+    }
+    .body{
+      .image{
+        width: 50%;
+      }
+      .form{
+        width: 50%;
+        
+      }
+      :where(.css-dev-only-do-not-override-pr0fja).ant-form-item{
+        margin-bottom: 12px;
+      }
+    }
+}
+
+.Sign-In{
+  .header{
+    height: 100px;
+  }
+  .form{
+    width: 33%;
+    :where(.css-dev-only-do-not-override-pr0fja).ant-col-9{
+      max-width: 100%;  
+    }
+    :where(.css-dev-only-do-not-override-pr0fja).ant-btn{
+    width: 250px;
+    }
+  }
+}
+
+.Navigate{
+  margin-top: 2.3%;
+  .search{
+    width: 79%;
+  }
+}
+
+.Service-list{
+  .filter{
+    margin-left: 5%;
+  }
+  .sub-filter{
+    margin-left: 10%;
+    .option{
+      margin-left: 5%;
+    }
+  }
+}
+
+
+.Account-Manage{
+  .manage{
+    margin: 20%;
+    margin-top: 30%;
+    a{
+      font-size: large;
+      font-weight: 500;
+      color: #6AB8FF;
+    }
+  }
+.Shipper{
+  .search{
+    .search-bar{
+      width: 79%;
+    }
+  }
+}
+
+.Store-Manage{
+  .search{
+    .search-bar{
+      width: 79%;
+    }
+  }
+}
+
+  .account{
+    margin: 5%;
+    font-size: 20px;
+    .search{
+      margin-left: 5%;
+      width: 39%;
+    }
+    td{
+      padding-right: 89px;
+      padding-top: 30px;
+    }
+    th{
+      text-align: left;
+      padding-right: 79px;
+    }
+  }
+}
+
+.Cart{
+  .sub-cart{
+    margin: 5%;
+    margin-left: 10%;
+  }
+}
+
+.Store-Order{
+  .service-and-order{
+    margin: 20%;
+    margin-top: 30%;
+    .filter{
+      margin-top: 10%;
+    }
+  }
+  .order{
+    margin: 5%;
+    font-size: 20px;
+    .search{
+      margin-left: 5%;
+      width: 39%;
+    }
+  }
+}
+
+.Store-Service{
+  .service-and-order{
+    margin: 20%;
+    margin-top: 30%;
+    .filter{
+      margin-top: 10%;
+    }
+  }
+  .order{
+    margin: 5%;
+    font-size: 20px;
+    .search{
+      margin-left: 5%;
+      width: 89%;
+    }
+  }
+}
+
+.Store-Profile{
+  .service-and-order{
+    margin: 20%;
+    margin-top: 30%;
+  }
+  .profile-form{
+    margin: 8%;
+  }
+}
+
+.Shipper-Delivery{
+  margin: 5%;
+}
+
+.Shipper-Profile{
+  margin: 5%;
+  .profile-form{
+    margin: 8%;
+  }
+}
+
+.User{
+  margin: 5%;
+}
+
+.Check-Out{
+  margin: 5%;
+  margin-top: 0;
+  .sub-total{
+    margin-left: 79%;
+  }
+}
+
+.User-Profile{
+  margin: 5%;
+  .profile-form{
+    margin: 8%;
+  }
+}
