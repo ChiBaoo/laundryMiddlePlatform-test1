@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/laundryMiddlePlatform-test1/static/css/main.e53fcfa7.css",
+    "main.js": "/laundryMiddlePlatform-test1/static/js/main.1d3959d9.js",
+    "static/js/787.d7bc8e33.chunk.js": "/laundryMiddlePlatform-test1/static/js/787.d7bc8e33.chunk.js",
+    "static/media/Golden-Retriever-10.jpg": "/laundryMiddlePlatform-test1/static/media/Golden-Retriever-10.664d7a8ec7c00dc2ddc6.jpg",
+    "static/media/shipper.jpg": "/laundryMiddlePlatform-test1/static/media/shipper.f0047f80bc9969e8cee3.jpg",
+    "static/media/image1.jpg": "/laundryMiddlePlatform-test1/static/media/image1.331412138273bd35f7aa.jpg",
+    "static/media/th.jpg": "/laundryMiddlePlatform-test1/static/media/th.77fd701e51f92a1188e3.jpg",
+    "index.html": "/laundryMiddlePlatform-test1/index.html",
+    "main.e53fcfa7.css.map": "/laundryMiddlePlatform-test1/static/css/main.e53fcfa7.css.map",
+    "main.1d3959d9.js.map": "/laundryMiddlePlatform-test1/static/js/main.1d3959d9.js.map",
+    "787.d7bc8e33.chunk.js.map": "/laundryMiddlePlatform-test1/static/js/787.d7bc8e33.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e53fcfa7.css",
+    "static/js/main.1d3959d9.js"
+  ]
+}
