@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import Navigation from '../Navigate/Navigation'
-import { Col, Row, Table, Input } from 'antd'
+import { Col, Row, Table, Input,Button } from 'antd'
 import { Account } from './AccountData'
-import { ShopOutlined ,AlertOutlined , TeamOutlined,  } from '@ant-design/icons';
 import AdminNav from './AdminNav';
 
 const { Search } = Input;
@@ -32,7 +30,10 @@ const columns = [
         title: 'Action',
         dataIndex: '',
         key: 'x',
-        render: () => <a href='aaaa.html'>Delete</a>,
+        render: () =><div>
+        <Button type='primary' style={{marginRight:'2%' }}>Update</Button>
+        <Button type='primary'style={{marginLeft:'2%' }} danger>Delete</Button>
+      </div>,
     },
 ];
 export default class AccountManage extends Component {

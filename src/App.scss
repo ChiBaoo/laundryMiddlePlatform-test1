@@ -21,18 +21,11 @@
 }
 
 .Sign-In{
+  margin: 5%;
   .header{
     height: 100px;
   }
-  .form{
-    width: 33%;
-    :where(.css-dev-only-do-not-override-pr0fja).ant-col-9{
-      max-width: 100%;  
-    }
-    :where(.css-dev-only-do-not-override-pr0fja).ant-btn{
-    width: 250px;
-    }
-  }
+  
 }
 
 .Navigate{

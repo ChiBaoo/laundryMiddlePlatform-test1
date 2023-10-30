@@ -11,7 +11,7 @@ export default class Navigation extends Component {
             <div className='Navigate'>
                 <Row>
                     <Col span={7}>
-                        <Link to='/'><h3>Laundry Middle Platform</h3></Link>
+                        <Link to='/'><h3 style={{margin: '5%', marginTop: '3%'}}>Laundry Middle Platform</h3></Link>
                     </Col>
                     <Col span={13}>
                         <div className='search'>

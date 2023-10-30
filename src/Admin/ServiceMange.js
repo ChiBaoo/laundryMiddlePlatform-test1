@@ -41,7 +41,10 @@ const columns = [
         title: 'Action',
         dataIndex: '',
         key: 'x',
-        render: () => <a href='aaaa.html'>Delete</a>,
+        render: () => <div>
+        <Button type='primary' style={{marginRight:'2%' }}>Update</Button>
+        <Button type='primary'style={{marginLeft:'2%' }} danger>Delete</Button>
+      </div>,
     },
 ];
 export default class ServiceManage extends Component {
