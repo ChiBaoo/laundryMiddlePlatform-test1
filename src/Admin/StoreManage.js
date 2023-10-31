@@ -1,8 +1,17 @@
 import React, { Component } from 'react'
 import { Col, Row, Table, Input, Modal, Button } from 'antd'
-import { Account } from './AccountData'
 import AdminNav from './AdminNav';
 
+export const Account =[
+    {key: 1, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
+    {key: 2, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
+    {key: 3, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
+    {key: 4, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
+    {key: 5, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
+    {key: 6, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
+    {key: 7, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
+    {key: 8, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
+];
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, ':', value);
 const columns = [
@@ -81,6 +90,8 @@ export default class StoreManage extends Component {
                                             <p>Phone Number</p><Input type='text' name='phone' />
                                             <p>Email</p><Input type='text' name='email' />
                                             <p>Password</p><Input type='password' name='password' />
+                                            <p>Address</p><Input type='text' name='address' />
+
                                         </Modal>
                                     </Col>
                                     <Col span={14}>

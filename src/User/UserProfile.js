@@ -9,6 +9,7 @@ const StoreProfile = () => {
   const [userName, setUserName] = useState('User name');
   const [description, setDescription] = useState('Description')
   const [address, setAddress] = useState('Address')
+  const [email, setEmail] = useState('UserEmail@gmail.com')
   const [phone, setPhone] = useState('0123456789')
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
@@ -59,16 +60,16 @@ const StoreProfile = () => {
             >
               {description}
             </Paragraph>
-            <Text type="secondary">Store name</Text>
+            <Text type="secondary">Email</Text>
             <Paragraph
               editable={{
-                onChange: setAddress,
+                onChange: setEmail,
               }}
               style={{ marginTop: '3px', fontSize: '16px' }}
             >
-              {address}
+              {email}
             </Paragraph>
-            <Text type="secondary">Store name</Text>
+            <Text type="secondary">Phone Number</Text>
             <Paragraph
               editable={{
                 onChange: setPhone,
@@ -76,6 +77,15 @@ const StoreProfile = () => {
               style={{ marginTop: '3px', fontSize: '16px' }}
             >
               {phone}
+            </Paragraph>
+            <Text type="secondary">Adress</Text>
+            <Paragraph
+              editable={{
+                onChange: setAddress,
+              }}
+              style={{ marginTop: '3px', fontSize: '16px' }}
+            >
+              {address}
             </Paragraph>
             <a style={{ marginTop: '3px', fontSize: '16px' }} onClick={showModal}>
               Change password

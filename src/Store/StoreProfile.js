@@ -10,6 +10,8 @@ const StoreProfile = () => {
   const [description, setDescription] = useState('Description')
   const [address, setAddress] = useState('Address')
   const [phone, setPhone] = useState('0123456789')
+  const [email, setEmail] = useState('StoreEmail@gmai.com')
+
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
   const showModal = () => {
@@ -59,7 +61,7 @@ const StoreProfile = () => {
           >
             {description}
           </Paragraph>
-          <Text type="secondary">Store name</Text>
+          <Text type="secondary">Adress</Text>
             <Paragraph
             editable={{
               onChange: setAddress,
@@ -68,7 +70,7 @@ const StoreProfile = () => {
           >
             {address}
           </Paragraph>
-          <Text type="secondary">Store name</Text>
+          <Text type="secondary">Phone Number</Text>
             <Paragraph
             editable={{
               onChange: setPhone,
@@ -76,6 +78,15 @@ const StoreProfile = () => {
             style={{ marginTop: '3px', fontSize:'16px'}}
           >
             {phone}
+          </Paragraph>
+          <Text type="secondary">Email</Text>
+            <Paragraph
+            editable={{
+              onChange: setEmail,
+            }}
+            style={{ marginTop: '3px', fontSize:'16px'}}
+          >
+            {email}
           </Paragraph>
           <a style={{ marginTop: '3px', fontSize: '16px' }} onClick={showModal}>
               Change password
