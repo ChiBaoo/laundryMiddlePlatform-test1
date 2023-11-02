@@ -3,9 +3,8 @@ import StoreOrder from './Store/StoreOrder'
 import SignUp from './SignUp-SignIn/SignUp'
 import SignIn from './SignUp-SignIn/SignIn'
 import ServiceDetail from './Guest/ServiceDetail'
-import Card from 'antd/es/card/Card'
 import SearchService from './Guest/SearchService';
-import {  Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import Home from './Navigate/Home'
 import ServiceManage from './Admin/ServiceMange';
 import ShipperManage from './Admin/ShipperManage'
@@ -22,6 +21,9 @@ import OngoingShipper from './Shipper/DeliveryPanel/Ongoing'
 import UserOrder from './User/UserOrder'
 import UserProfile from './User/UserProfile'
 import CheckOut from './User/CheckOut'
+import Role1 from './Navigate/Role1'
+import Role2 from './Navigate/Role2'
+
 
 
 export default class Test extends Component {
@@ -54,11 +56,14 @@ export default class Test extends Component {
           <Route path='user-order' element={<UserOrder/>} />
           <Route path='user-profile' element={<UserProfile/>} />
           <Route path='checkout' element={<CheckOut/>} />
-
-
+          <Route path='user' element={<User/>} />
+          <Route path='role1' element={<Role1/>} />
+          <Route path='role2' element={<Role2 />} />
           
         </Routes>
       </div>
     )
   }
 }
+
+ 

@@ -1,20 +1,33 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import { Col, Row, Table, Input, Modal, Button } from 'antd'
 import AdminNav from './AdminNav';
 
-export const Account =[
-    {key: 1, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
-    {key: 2, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
-    {key: 3, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
-    {key: 4, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
-    {key: 5, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
-    {key: 6, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
-    {key: 7, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
-    {key: 8, name: 'Store name', email: 'storeEmail@gmai.com', phone:'0123456789', status: 'active'},
+export const Account = [
+    { id: 1, name: 'Store name', description: 'Store Description', email: 'storeEmail@gmai.com', phone: '0123456789', status: 'active', },
+    { id: 2, name: 'Store name', description: 'Store Description', email: 'storeEmail@gmai.com', phone: '0123456789', status: 'active', },
+    { id: 3, name: 'Store name', description: 'Store Description', email: 'storeEmail@gmai.com', phone: '0123456789', status: 'active', },
+    { id: 4, name: 'Store name', description: 'Store Description', email: 'storeEmail@gmai.com', phone: '0123456789', status: 'active', },
+    { id: 5, name: 'Store name', description: 'Store Description', email: 'storeEmail@gmai.com', phone: '0123456789', status: 'active', },
+    { id: 6, name: 'Store name', description: 'Store Description', email: 'storeEmail@gmai.com', phone: '0123456789', status: 'active', },
+    { id: 8, name: 'Store name', description: 'Store Description', email: 'storeEmail@gmai.com', phone: '0123456789', status: 'active', },
+    { id: 9, name: 'Store name', description: 'Store Description', email: 'storeEmail@gmai.com', phone: '0123456789', status: 'active', },
+    { id: 10, name: 'Store name', description: 'Store Description', email: 'storeEmail@gmai.com', phone: '0123456789', status: 'active', },
+
 ];
 const { Search } = Input;
 const onSearch = (value, _e, info) => console.log(info?.source, ':', value);
-const columns = [
+
+const getId = (id) => {
+    console.log('check:',  id)
+}
+// const handleDelete = (id) => {
+//     const newData = dataSource.filter((item) => item.key !== key);
+//     setDataSource(newData);
+//   };
+export default function StoreManage() {
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [storeId, setStoreId] = useState()
+    const columns = [
     {
         title: 'Name',
         dataIndex: 'name',
@@ -38,33 +51,28 @@ const columns = [
     {
         title: 'Action',
         dataIndex: '',
-        key: 'x',
-        render: () => <div>
-        <Button type='primary' style={{marginRight:'2%' }}>Update</Button>
-        <Button type='primary'style={{marginLeft:'2%' }} danger>Delete</Button>
-      </div>,
+        key: 'id',
+        render: (record) => <div>
+            <Button type='primary' style={{ marginRight: '2%' }} onClick={() => { onDeleteStudent(record);      }} >Update {record.id}</Button>
+        </div>,
+        
     },
 ];
-export default class StoreManage extends Component {
-    state = {
-        isModalOpen: false
-    }
-    showModal = () => {
-        this.setState({
-            isModalOpen: true
-        })
+const onDeleteStudent = (record) =>{
+    // setStoreId([record.id])
+    console.log(record.id)
+    // console.log(storeId)
+}
+    const showModal = () => {
+        setIsModalOpen(true)
     };
-    handleOk = () => {
-        this.setState({
-            isModalOpen: false
-        })
+    const handleOk = () => {
+        setIsModalOpen(false)
+      };
+    const handleCancel = () => {
+        setIsModalOpen(false)
     };
-    handleCancel = () => {
-        this.setState({
-            isModalOpen: false
-        })
-    };
-    render() {
+
         return (
             <div className='Account-Manage'>
                 <Row>
@@ -77,12 +85,12 @@ export default class StoreManage extends Component {
                             <div className='search'>
                                 <Row>
                                     <Col span={10}>
-                                        <Button type="primary" onClick={this.showModal} style={{ backgroundColor: '#6AB8FF' }}>
+                                        <Button type="primary" onClick={showModal} style={{ backgroundColor: '#6AB8FF' }}>
                                             Add a store
                                         </Button>
-                                        <Modal title="Basic Modal" open={this.state.isModalOpen} onOk={this.handleOk} onCancel={this.handleCancel}
+                                        <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
                                             footer={[
-                                                <Button type="primary" onClick={this.handleOk}>
+                                                <Button type="primary" onClick={handleOk}>
                                                     Submit
                                                 </Button>,
                                             ]}>
@@ -114,6 +122,7 @@ export default class StoreManage extends Component {
                                         >
                                             {record.name + ', ' + record.phone}
                                         </p>
+                                        
                                     )
                                 }}
                             />
@@ -122,5 +131,5 @@ export default class StoreManage extends Component {
                 </Row>
             </div>
         )
-    }
+    
 }
