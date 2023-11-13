@@ -1,167 +1,149 @@
-import { Button, Table, Modal, Input } from "antd";
-import { useState } from "react";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import React, { useEffect, useState } from 'react'
+import { Col, Row, Table, Button } from 'antd'
+import { AlertOutlined, FormOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-function Home() {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingStudent, setEditingStudent] = useState(null);
-  const [dataSource, setDataSource] = useState([
-    {
-      id: 1,
-      name: "John",
-      email: "john@gmail.com",
-      address: "John Address",
-    },
-    {
-      id: 2,
-      name: "David",
-      email: "david@gmail.com",
-      address: "David Address",
-    },
-    {
-      id: 3,
-      name: "James",
-      email: "james@gmail.com",
-      address: "James Address",
-    },
-    {
-      id: 4,
-      name: "Sam",
-      email: "sam@gmail.com",
-      address: "Sam Address",
-    },
-  ]);
+
+
+
+const DeliveryData = [
+  { serviceName: 'Service name', addressReceive: 'Address receive the clothes', addressSend: 'Address send the clothes', weight : 10, deliveryFee: 30000 },
+  { serviceName: 'Service name', addressReceive: 'Address receive the clothes', addressSend: 'Address send the clothes', weight : 10, deliveryFee: 30000 },
+  { serviceName: 'Service name', addressReceive: 'Address receive the clothes', addressSend: 'Address send the clothes', weight : 10, deliveryFee: 30000 },
+  { serviceName: 'Service name', addressReceive: 'Address receive the clothes', addressSend: 'Address send the clothes', weight : 10, deliveryFee: 30000 },
+  { serviceName: 'Service name', addressReceive: 'Address receive the clothes', addressSend: 'Address send the clothes', weight : 10, deliveryFee: 30000 },
+  { serviceName: 'Service name', addressReceive: 'Address receive the clothes', addressSend: 'Address send the clothes', weight : 10, deliveryFee: 30000 },
+  { serviceName: 'Service name', addressReceive: 'Address receive the clothes', addressSend: 'Address send the clothes', weight : 10, deliveryFee: 30000 },
+]
+
+
+
+export default function ShipperDelivery(){
+  const [serviceData, setServiceData] = useState([])
+
+  const bearer_token = `Bearer ${localStorage.getItem('Token')}`;
   const columns = [
     {
-      key: "1",
-      title: "ID",
-      dataIndex: "id",
+      title: 'Sender Name',
+      dataIndex: 'senderName',
+      key: 'senderName',
     },
     {
-      key: "2",
-      title: "Name",
-      dataIndex: "name",
+      title: 'Sender Phone',
+      dataIndex: 'senderPhone',
+      key: 'senderPhone',
     },
     {
-      key: "3",
-      title: "Email",
-      dataIndex: "email",
+      title: 'Sender Address',
+      dataIndex: 'senderAddress',
+      key: 'senderAddress',
     },
     {
-      key: "4",
-      title: "Address",
-      dataIndex: "address",
+      title: 'Reicever Name',
+      dataIndex: 'receiverName',
+      key: 'receiverName',
     },
     {
-      key: "5",
-      title: "Actions",
-      render: (record) => {
-        return (
-          <>
-            <EditOutlined
-              onClick={() => {
-                onEditStudent(record);
-              }}
-            />
-            <DeleteOutlined
-              onClick={() => {
-                onDeleteStudent(record);
-              }}
-              style={{ color: "red", marginLeft: 12 }}
-            />
-          </>
-        );
-      },
+      title: 'Receiver Phone',
+      dataIndex: 'receiverPhone',
+      key: 'receiverPhone',
     },
+    {
+      title: 'Receiver Address',
+      dataIndex: 'receiverAddress',
+      key: 'receiverAddress',
+    },
+    
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+    },
+  
+    {
+      title: 'Action',
+      dataIndex: '',
+      key: 'x',
+      render: (record) => <div>
+        <Button type='primary' onClick={AcceptOrder}>Accept</Button>
+        {/* <Button type='primary' style={{ marginLeft: '5%'}} danger>Cancel</Button> */}
+      </div>
+    },
+  
   ];
-
-  const onAddStudent = () => {
-    const randomNumber = parseInt(Math.random() * 1000);
-    const newStudent = {
-      id: randomNumber,
-      name: "Name " + randomNumber,
-      email: randomNumber + "@gmail.com",
-      address: "Address " + randomNumber,
-    };
-    setDataSource((pre) => {
-      return [...pre, newStudent];
-    });
+  
+  const AcceptOrder =() =>{
+    const jsonData = {
+      
   };
-  const onDeleteStudent = (record) => {
-    Modal.confirm({
-      title: "Are you sure, you want to delete this student record?",
-      okText: "Yes",
-      okType: "danger",
-      onOk: () => {
-        // setDataSource((pre) => {
-        //   return pre.filter((student) => student.id !== record.id);
-        // });
+  
+  axios.patch('https://localhost:7195/api/Delivery/accept-delivery/4?shipperId=3', {
+      headers: {
+          // 'Content-Type': 'application/json',
+          'accept': '*/*',
+          Authorization: bearer_token
 
       },
-    });
-  };
-  const onEditStudent = (record) => {
-    console.log(record.id)
-    setIsEditing(true);
-    setEditingStudent({ ...record });
-  };
-  const resetEditing = () => {
-    setIsEditing(false);
-    setEditingStudent(null);
-  };
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Button onClick={onAddStudent}>Add a new Student</Button>
-        <Table columns={columns} dataSource={dataSource}></Table>
-        <Modal
-          title="Edit Student"
-          visible = {isEditing}
-          okText="Save"
-          onCancel={() => {
-            resetEditing();
-          }}
-          onOk={() => {
-            setDataSource((pre) => {
-              return pre.map((student) => {
-                if (student.id === editingStudent.id) {
-                  return editingStudent;
-                } else {
-                  return student;
-                }
-              });
-            });
-            resetEditing();
-          }}
-        >
-          <Input
-            value={editingStudent?.name}
-            onChange={(e) => {
-              setEditingStudent((pre) => {
-                return { ...pre, name: e.target.value };
-              });
-            }}
-          />
-          <Input
-            value={editingStudent?.email}
-            onChange={(e) => {
-              setEditingStudent((pre) => {
-                return { ...pre, email: e.target.value };
-              });
-            }}
-          />
-          <Input
-            value={editingStudent?.address}
-            onChange={(e) => {
-              setEditingStudent((pre) => {
-                return { ...pre, address: e.target.value };
-              });
-            }}
-          />
-        </Modal>
-      </header>
-    </div>
-  );
-}
+  })
+      .then(response => {
+          // Handle the successful response
+          console.log('good good')
+          
+  
+          return response
+      })
+      .catch(error => {
+          // Handle the error
+          console.log(error);
+          console.log('token', bearer_token)
+      });
+  }
+  useEffect(() => {
+    setServiceData(getService)
+}, []);
 
-export default Home;
+const getService = () => {
+    const headers = {
+        Authorization: bearer_token
+    };
+    // Make the GET request.
+    axios
+        .get('https://localhost:7195/api/Delivery', { headers })
+        .then((response) => {
+            // Handle the response.
+            setServiceData(response.data)
+            console.log(response.data)
+
+        })
+        .catch((error) => {
+            console.log("local", localStorage.getItem("Token"))
+
+        });
+}
+    return (
+      <div className='Shipper-Delivery'>
+        <Row>
+          <Col span={4}>
+            <div className='shipper-nav'>
+              <Link to='/shipper-delivery'><AlertOutlined style={{ fontSize: '30px', margin: '5%' }} /> Deliveries List</Link> <br />
+              <Link to='/shipper-profile'><FormOutlined style={{ fontSize: '30px', margin: '5%' }} /> Profile</Link> <br />
+            </div>
+          </Col>
+          <Col span={20}>
+            <div className='deliveries-list'>
+              <Link to='/shipper-delivery' style={{ margin: '5%', fontSize: '16px', marginRight: '2%', color: '#A9A9A9' }}>New Order</Link> /
+              <Link to='/shipper-panel-ongoing' style={{ margin: '5%', fontSize: '16px', marginRight: '2%', marginLeft: '2%' }}>Ongoing</Link> /
+              <Link to='/shipper-panel-finish' style={{ margin: '5%', fontSize: '16px', marginRight: '2%', marginLeft: '2%' }}>Finish</Link>
+
+              <Table
+                columns={columns}
+                dataSource={serviceData}
+                style={{ margin: '3%' }}
+              />
+            </div>
+          </Col>
+        </Row>
+      </div>
+    )
+  }

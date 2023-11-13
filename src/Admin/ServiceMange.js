@@ -1,11 +1,10 @@
-import React, { Component, useState } from 'react'
-import { Col, Row, Table, Input, Modal, Button, Select, Space } from 'antd'
+import React, {useState } from 'react'
+import { Col, Row, Table, Input, Modal, Button, Select, Space, message } from 'antd'
 import AdminNav from './AdminNav';
 import { useEffect } from 'react';
 import axios from 'axios';
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-const TOKEN = localStorage.getItem("Token")
 
 const { Search } = Input;
 // const onSearch = (value, _e, info) => console.log(info?.source, ':', value);
@@ -19,14 +18,15 @@ export default function ServiceManage() {
     const [serviceId, setServiceId] = useState()
     const [serviceName, setServiceName] = useState()
     const [description, setDescription] = useState()
-    const [feePerUnitKg, setFeePerUnitKg] = useState()
     const [clothesTypeId, setClothesTypeId] = useState(1)
     const [image, setImage] = useState()
     const [isEditing, setIsEditing] = useState(false);
     const [editingService, setEditingService] = useState(null);
-    const [search, setSearch] = useState()
+    const [search, setSearch] = useState('')
+    const [messageApi, contextHolder] = message.useMessage();
 
-    const bearer_token = `Bearer ${localStorage.getItem('Token')}`;
+    const bearer_token = ''
+    // `Bearer ${localStorage.getItem('Token')}`;
     const columns = [
         {
             title: 'Name',
@@ -37,11 +37,6 @@ export default function ServiceManage() {
             title: 'Description',
             dataIndex: 'description',
             key: 'description',
-        },
-        {
-            title: 'Price (vnd)',
-            dataIndex: 'feePerUnitKg',
-            key: 'feePerUnitKg',
         },
         {
             title: 'Clothes Type',
@@ -104,28 +99,26 @@ export default function ServiceManage() {
     //DELETE
     const DeleteService = (record) => {
         Modal.confirm({
-          title: "Are you sure, you want to delete this service record?",
-          okText: "Yes",
-          okType: "danger",
-          onOk: () => {
-            const headers = {
-                Authorization: bearer_token
-            };
-            const deleteId = record.serviceId
-            console.log('deleteId', deleteId)
-            axios.delete(`https://localhost:7195/api/Service/deleteservice/${deleteId}`, { headers })
-            .then((response) => {
-                // Handle the response.
-                console.log(response)
-            })
-            .catch((error) => {
-                console.log("err", error)
-                console.log('record', record.serviceId)
-            });
-    
-          },
+            title: "Are you sure, you want to delete this service record?",
+            okText: "Yes",
+            okType: "danger",
+            onOk: () => {
+                const deleteId = record.serviceId
+                console.log('deleteId', deleteId)
+                axios.delete(`https://localhost:7195/api/Service/deleteservice/${deleteId}`)
+                    .then((response) => {
+                        // Handle the response.
+                        successNofi('Delete service successfully')
+                        getService()
+                        console.log(response)
+                    })
+                    .catch((error) => {
+                        console.log("err", error)
+                        failNofi('Delete fail')
+                    });
+            },
         });
-      };
+    };
     //DETAIL
     const showModal = () => {
         setIsModalOpen(true)
@@ -135,41 +128,16 @@ export default function ServiceManage() {
         const data = {
             "serviceName": serviceName,
             "description": description,
-            "feePerUnitKg": feePerUnitKg,
             "clothesTypeId": clothesTypeId,
             "status": "",
             "image": image
         }
-        // };
-        // const headers = {
-        //     Authorization: bearer_token
-        // };
-        // console.log("headed", headers)
-        // console.log("check token: ", bearer_token)
-        // axios.post('https://localhost:7195/api/Service/createservice', { headers,'Content-Type': 'application/json',
-        // 'accept': '*/*' }, { data })
-        //     .then((response) => {
-        //         // Handle the response.
-        //         // setServiceData(response.data)
-        //         console.log(response.data)
-
-        //     })
-        //     .catch((error) => {
-        //         console.log("local", error)
-        //         console.log("local", bearer_token)
-
-
-
-        //     });
-        axios.post('https://localhost:7195/api/Service/createservice', data, {
-            headers: {
-                'Content-Type': 'application/json',
-                'accept': '*/*',
-                Authorization: bearer_token
-            },
-        })
+        if(data.serviceName || data.description){
+            axios.post('https://localhost:7195/api/Service/createservice', data)
             .then(response => {
                 // Handle the successful response
+                setServiceData(getService)
+                successNofi('Create new service successfully')
                 console.log(response.data);
                 // setServiceData(getService)
 
@@ -177,59 +145,41 @@ export default function ServiceManage() {
             )
             .catch(error => {
                 // Handle the error
+                failNofi('Something was wrong, please try again')
                 console.log(error);
             });
+        }else{
+            failNofi('Some field was missing, please try again')
+        }
+        
         setIsModalOpen(false)
     };
     const editService = () => {
 
         const data = {
-            "serviceId": 17,
-            "serviceName": "giat nhanh cham",
-            "description": "giat sieu cham",
-            "feePerUnitKg": 10000,
-            "clothesTypeId": 1,
-            "status": "active",
-            "image": "aaaa"
+            "serviceId": editingService.serviceId,
+            "serviceName": serviceName,
+            "description": description,
+            "clothesTypeId": clothesTypeId,
+            "status": "Active",
+            "image": ''
         }
-        // };
-        // const headers = {
-        //     Authorization: bearer_token
-        // };
-        // console.log("headed", headers)
-        // console.log("check token: ", bearer_token)
-        // axios.post('https://localhost:7195/api/Service/createservice', { headers,'Content-Type': 'application/json',
-        // 'accept': '*/*' }, { data })
-        //     .then((response) => {
-        //         // Handle the response.
-        //         // setServiceData(response.data)
-        //         console.log(response.data)
-
-        //     })
-        //     .catch((error) => {
-        //         console.log("local", error)
-        //         console.log("local", bearer_token)
-
-
-
-        //     });
-        axios.put('https://localhost:7195/updateservice', editingService, {
-            headers: {
-                'Content-Type': 'application/json',
-                'accept': '*/*',
-                Authorization: bearer_token
-            },
-        })
+        console.log('service edit: ', editingService)
+        
+        axios.put(`https://localhost:7195/updateservice/${editingService.serviceId}`, editingService)
             .then(response => {
                 // Handle the successful response
-                console.log(response.data);
-                // setServiceData(getService)
-
+                successNofi('Update service successfully')
+                getService()
+                console.log('edit data:', response)
             }
             )
             .catch(error => {
                 // Handle the error
                 console.log(error);
+                failNofi('Something was wrong, please try again')
+                console.log('edit data:', data)
+
             });
     };
     const handleCancel = () => {
@@ -246,14 +196,8 @@ export default function ServiceManage() {
         console.log(`selected ${value}`);
     };
     const searchByName = () => {
-        const headers = {
-            Authorization: bearer_token,
-            // 'Content-Type': 'application/json',
-            //     'accept': '*/*',
-        };
-        // Make the GET request.
         axios
-            .get(`https://localhost:7195/api/service?$filter=contains(ServiceName, '${search}')`, { headers })
+            .get(`https://localhost:7195/api/service?$filter=contains(ServiceName, '${search}')`)
             .then((response) => {
                 // Handle the response.
                 setServiceData(response.data)
@@ -265,6 +209,27 @@ export default function ServiceManage() {
 
             });
     }
+    const successNofi = (message) =>{
+        messageApi.open({
+            type: 'success',
+            content: message,
+            style: {
+                marginLeft: '80%',
+                marginTop: '5%',
+              },
+          })
+    }
+    const failNofi = (message) =>{
+        messageApi.open({
+            type: 'error',
+            content: message,
+            style: {
+                width: '100%', 
+                marginLeft: '38%',
+                marginTop: '5%',
+              },
+          })
+    }
     return (
         <div className='Account-Manage'>
             <Row>
@@ -274,13 +239,14 @@ export default function ServiceManage() {
                 <Col span={20}>
                     <div className='Shipper'>
                         <h3>Service Manage</h3>
+                        {contextHolder}
                         <div className='search'>
                             <Row>
                                 <Col span={10}>
                                     <Button type="primary" onClick={showModal} style={{ backgroundColor: '#6AB8FF' }}>
                                         Add a service
                                     </Button>
-                                    <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
+                                    <Modal title="Create a service" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}
                                         footer={[
                                             <Button type="primary" onClick={handleOk}>
                                                 Submit
@@ -288,7 +254,6 @@ export default function ServiceManage() {
                                         ]}>
                                         <p>Service Name</p><Input type='text' value={serviceName} onChange={(e) => setServiceName(e.target.value)} />
                                         <p>Description</p><Input type='text' value={description} onChange={(e) => setDescription(e.target.value)} />
-                                        <p>Fee</p><Input type='text' name='email' value={feePerUnitKg} onChange={(e) => setFeePerUnitKg(e.target.value)} />
                                         <p>clothesTypeId</p>
                                         <Select
                                             defaultValue="1"
@@ -307,7 +272,7 @@ export default function ServiceManage() {
                                                 }
                                             ]}
                                         />
-                                        <p>Image Url</p><Input type='text' value={image} onChange={(e) => setImage(e.target.value)} />
+                                        {/* <p>Image Url</p><Input type='text' value={image} onChange={(e) => setImage(e.target.value)} /> */}
 
                                     </Modal>
                                 </Col>
@@ -319,7 +284,7 @@ export default function ServiceManage() {
                                                     width: '200%',
                                                 }}
                                             >
-                                                <Input defaultValue="Combine input and button" placeholder="Search a service by name" value={search} onChange={(e) => setSearch(e.target.value)} />
+                                                <Input placeholder="Search a service by name" value={search} onChange={(e) => setSearch(e.target.value)} />
                                                 <Button type="primary" onClick={searchByName}>Search</Button>
                                             </Space.Compact></Space>
                                     </div>
@@ -330,20 +295,20 @@ export default function ServiceManage() {
                         <Table
                             columns={columns}
                             dataSource={serviceData}
-                            expandable={{
-                                expandedRowRender: (record) => (
-                                    <p
-                                        style={{
-                                            marginLeft: '5%',
-                                        }}
-                                    >
-                                        {record.name + ': ' + record.description}
-                                    </p>
-                                )
-                            }}
+                        // expandable={{
+                        //     expandedRowRender: (record) => (
+                        //         <p
+                        //             style={{
+                        //                 marginLeft: '5%',
+                        //             }}
+                        //         >
+                        //             {record.name + ': ' + record.description}
+                        //         </p>
+                        //     )
+                        // }}
                         />
                         <Modal
-                            title="Edit Student"
+                            title="Edit Service"
                             visible={isEditing}
                             okText="Save"
                             onCancel={() => {
@@ -373,24 +338,7 @@ export default function ServiceManage() {
                                     });
                                 }}
                             />
-                            <p>Fee</p>
-                            <Input
-                                value={editingService?.feePerUnitKg}
-                                onChange={(e) => {
-                                    setEditingService((pre) => {
-                                        return { ...pre, feePerUnitKg: e.target.value };
-                                    });
-                                }}
-                            />
                             <p>Clother Type</p>
-                            {/* <Input
-                                value={editingService?.feePerUnitKg}
-                                onChange={(e) => {
-                                    setEditingService((pre) => {
-                                        return { ...pre, feePerUnitKg: e.target.value };
-                                    });
-                                }}
-                            /> */}
                             <Select
                                 defaultValue={editingService?.clothesTypeId}
                                 style={{

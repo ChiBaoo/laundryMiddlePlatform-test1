@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Col, Row, Form, Input, Button } from 'antd';
+import { Col, Row, Form, Input, Button, message } from 'antd';
 import laudryImage from '../assets/image1.jpg'
 import { type } from '@testing-library/user-event/dist/type';
 import { useNavigate } from 'react-router-dom';
@@ -14,36 +14,55 @@ function SignUp() {
     address: '',
     password: ''
   })
+  const [messageApi, contextHolder] = message.useMessage();
+
   const navigate = useNavigate();
 
   const Register = () => {
-    // setUserData({
-    //   firstName: 'tien son',
-    //   lastName: 'nguyen',
-    //   email: 'tienson@gmail.com',
-    //   phoneNumber: '0543216789',
-    //   address: 'quan1',
-    //   password: '123456'
-    // })
-    console.log(userData)
 
-    axios.post('https://localhost:7195/api/User/Register', userData, {
-      headers: {
-        'Content-Type': 'application/json',
-        'accept': '*/*'
+    if (userData.firstName && userData.lastName && userData.email && userData.phoneNumber && userData.address && userData.password) {
+      axios.post('https://localhost:7195/api/User/Register', userData)
+        .then(response => {
+          // Handle the successful response
+          console.log(response.data);
+          if (response.data === 'Sign Up successfully!')
+            navigate('/sign-in')
+          successNofi('Sign up successfully')
+        }
+        )
+        .catch(error => {
+          // Handle the error
+          console.log(error);
+          if (error.response.data === 'The account is already existed') {
+            failNofi(error.response.data)
+          } else {
+            failNofi('Some field was wrong, please try again')
+          }
+        });
+    } else {
+      failNofi('Some field was missing, please try again')
+    }
+  }
+  const successNofi = (message) => {
+    messageApi.open({
+      type: 'success',
+      content: message,
+      style: {
+        marginLeft: '80%',
+        marginTop: '5%',
       },
     })
-      .then(response => {
-        // Handle the successful response
-        console.log(response.data);
-        if(response.data==='Sign Up successfully!')
-        navigate('/sign-in')
-      }
-      )
-      .catch(error => {
-        // Handle the error
-        console.log(error);
-      });
+  }
+  const failNofi = (message) => {
+    messageApi.open({
+      type: 'error',
+      content: message,
+      style: {
+        width: '100%',
+        marginLeft: '38%',
+        marginTop: '5%',
+      },
+    })
   }
   return (
     <div className='Sign-Up'>
@@ -53,6 +72,7 @@ function SignUp() {
             <img src={laudryImage} style={{ width: '400px', marginLeft: '50px' }} />
           </Col>
           <Col span={12}>
+            {contextHolder}
             <Form
               name="nest-messages"
               style={{

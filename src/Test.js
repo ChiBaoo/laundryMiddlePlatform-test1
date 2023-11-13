@@ -16,13 +16,13 @@ import User from './User/User'
 import StoreService from './Store/StoreService'
 import StoreProfile from './Store/StoreProfile'
 import ShipperProfile from './Shipper/ShipperProfile'
-import FinishShipper from './Shipper/DeliveryPanel/Finish'
-import OngoingShipper from './Shipper/DeliveryPanel/Ongoing'
 import UserOrder from './User/UserOrder'
 import UserProfile from './User/UserProfile'
 import CheckOut from './User/CheckOut'
 import Role1 from './Navigate/Role1'
 import Role2 from './Navigate/Role2'
+import OrderDetail from './Guest/OrderDetail'
+import StoreOwnerProfile from './Store/StoreOwnerProfile'
 
 
 
@@ -32,7 +32,10 @@ export default class Test extends Component {
       <div>
         <Navigation/>
         <Routes>
-          <Route path='/' element={<Home/>}/>
+        <Route path='home' element={<Home/>}/>
+
+          <Route path='/' element={<SearchService/>}/>
+          <Route path='laundryMiddlePlatform-test1' element={<SearchService/>}/>
           <Route path='search-service' element={<SearchService/>}/>
           <Route path='sign-up' element={<SignUp/>}/>
           <Route path='sign-in' element={<SignIn/>} />
@@ -45,21 +48,17 @@ export default class Test extends Component {
           <Route path='store' element={<StoreOrder/>} />
           <Route path='shipper-delivery' element={<ShipperDelivery/>} />
           <Route path='shipper-profile' element={<ShipperProfile/>} />
-          <Route path='user' element={<User/>} />
           <Route path='store-order' element={<StoreOrder/>} />
           <Route path='store-service' element={<StoreService/>} />
           <Route path='store-profile' element={<StoreProfile/>} />
-          <Route path='shipper-panel-neworder' element={<ShipperDelivery/>} />
-          <Route path='shipper-panel-ongoing' element={<OngoingShipper/>} />
-          <Route path='shipper-panel-finish' element={<FinishShipper/>} />
-          <Route path='user-cart' element={<User/>} />
+          <Route path='store-owner-profile' element={<StoreOwnerProfile/>} />>
           <Route path='user-order' element={<UserOrder/>} />
-          <Route path='user-profile' element={<UserProfile/>} />
+          <Route path='user-profile' element={<UserProfile />} />
           <Route path='checkout' element={<CheckOut/>} />
           <Route path='user' element={<User/>} />
           <Route path='role1' element={<Role1/>} />
           <Route path='role2' element={<Role2 />} />
-          
+          <Route path='order-detail' element={<OrderDetail />} />
         </Routes>
       </div>
     )

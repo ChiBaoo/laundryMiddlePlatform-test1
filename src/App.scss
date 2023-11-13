@@ -70,6 +70,7 @@
   .search{
     .search-bar{
       width: 100%;
+      margin-left: 5%;
     }
   }
 }
@@ -100,6 +101,7 @@
 }
 
 .Store-Order{
+  margin: 5%;
   .service-and-order{
     margin: 20%;
     margin-top: 30%;
@@ -118,6 +120,7 @@
 }
 
 .Store-Service{
+  margin: 5%;
   .service-and-order{
     margin: 20%;
     margin-top: 30%;
@@ -134,8 +137,11 @@
     }
   }
 }
-
+.Store-Service{
+  margin: 5%;
+}
 .Store-Profile{
+  margin: 5%;
   .service-and-order{
     margin: 20%;
     margin-top: 30%;
